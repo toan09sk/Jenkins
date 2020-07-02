@@ -10,6 +10,10 @@ pipeline {
     environment {
         NEW_VERSION = '1.3.0'
     }
+
+    tools {
+        jdk 'jdk_1.8.0_231'
+    }
     
     stages {
 
