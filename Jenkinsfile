@@ -29,8 +29,6 @@ pipeline {
                 steps {
                     script {
                         gv.buildApp()
-                        javac Hello.java
-                        java Hello
                 }
             }
         }
