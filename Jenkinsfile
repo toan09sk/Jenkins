@@ -1,4 +1,4 @@
-CODE_CHANGES = getGitChanges()
+def username = 'Jenkins'
 pipeline {
 
     agent any
@@ -11,12 +11,14 @@ pipeline {
          stage("build") {
                 when {
                     expression {
-                        BRANCH_NAME == 'dev' && CODE_CHANGES == true
+                        BRANCH_NAME == 'develop'
                     }
                 }
                 steps {
                     echo 'building the application...'
                     echo "building version ${NEW_VERSION}"
+                    echo "I said, Hello Mr. ${username}"
+                    echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 }
             }
 
