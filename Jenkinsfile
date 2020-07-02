@@ -55,4 +55,12 @@ pipeline {
             }
         }
     }
+     post {
+        always {
+            echo 'hello world'
+        }
+        failure {
+            echo 'will email'
+        }
+    }
 }
