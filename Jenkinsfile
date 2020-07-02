@@ -1,4 +1,5 @@
 def username = 'Jenkins'
+def gv
 pipeline {
 
     agent any
@@ -12,6 +13,13 @@ pipeline {
     
     stages {
 
+         stage("init") {
+                steps {
+                    script {
+                        gv = load "script.groovy"
+                }
+            }
+         }
          stage("build") {
                 when {
                     expression {
@@ -19,12 +27,11 @@ pipeline {
                     }
                 }
                 steps {
-                    echo 'building the application...'
-                    echo "building version ${NEW_VERSION}"
-                    echo "I said, Hello Mr. ${username}"
-                    echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                    script {
+                        gv.buildApp()
                 }
             }
+        }
 
         stage("test") {
             when {
@@ -33,15 +40,18 @@ pipeline {
                 }
             }
             steps {
-                echo 'testing the application...'
+                    script {
+                        gv.testApp()
+                }
             }
         }
 
         stage("deploy") {
 
-            steps {
-                echo 'deploying the application...'
-                echo "deploying version ${params.VERSION}"
+           steps {
+                    script {
+                        gv.deployApp()
+                }
             }
         }
     }
