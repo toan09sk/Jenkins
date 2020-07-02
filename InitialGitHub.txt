@@ -14,3 +14,6 @@ java Hello
 
 ### Launch jenkins
 java -jar jenkins.war
+
+### show environment variable
+localhost:8080/env-vars.html/
