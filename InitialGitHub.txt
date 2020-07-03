@@ -17,3 +17,5 @@ java -jar jenkins.war
 
 ### show environment variable
 localhost:8080/env-vars.html/
+
+add C:\Program Files\Git\usr\bin to the PATH ---- using sh
