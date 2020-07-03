@@ -7,12 +7,13 @@ pipeline {
         choice(name: 'VERSION', choices: ['1.1.0','1.2.0','1.3.0'], description: '')
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
+
     environment {
         NEW_VERSION = '1.3.0'
     }
 
     tools {
-        jdk 'jdk9'
+        gradle 'Gradle'
     }
     
     stages {
@@ -21,6 +22,10 @@ pipeline {
                 steps {
                     script {
                         gv = load "script.groovy"
+                }
+
+                 nodejs('Node') {
+                    sh 'yarn install'
                 }
             }
          }
@@ -33,6 +38,10 @@ pipeline {
                 steps {
                     script {
                         gv.buildApp()
+                }
+
+                nodejs('Node') {
+                    sh 'yarn install'
                 }
             }
         }
@@ -56,6 +65,8 @@ pipeline {
                     script {
                         gv.deployApp()
                 }
+
+                sh './gradlew -v'
             }
         }
     }

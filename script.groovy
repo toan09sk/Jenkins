@@ -3,7 +3,6 @@ def buildApp() {
     echo "building version ${NEW_VERSION}"
     echo "I said, Hello Mr. ${username}"
     echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-    sh '$JAVA_HOME/bin/java -version'
 }
 
 def testApp() {
