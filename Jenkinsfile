@@ -27,6 +27,8 @@ pipeline {
                 echo 'execute yarn...'
                 nodejs('Node') {
                     sh 'yarn install'
+                    sh 'node -v'
+                    sh 'npm -v'
                 }
 
             }
