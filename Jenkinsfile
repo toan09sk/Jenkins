@@ -63,11 +63,6 @@ pipeline {
                     script {
                         gv.deployApp()
                 }
-
-                echo 'execute gradle...'
-                sh 'javac Hello.java'
-                sh 'java Hello'
-                sh 'gradle -v'
             }
         }
     }
