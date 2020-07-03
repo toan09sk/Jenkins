@@ -67,6 +67,7 @@ pipeline {
                 echo 'execute gradle...'
                 sh 'javac Hello.java'
                 sh 'java Hello'
+                sh 'gradle -v'
             }
         }
     }
