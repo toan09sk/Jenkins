@@ -24,7 +24,8 @@ pipeline {
                         gv = load "script.groovy"
                 }
 
-                 nodejs('Node') {
+                echo 'execute yarn...'
+                nodejs('Node') {
                     sh 'yarn install'
                 }
             }
@@ -38,10 +39,6 @@ pipeline {
                 steps {
                     script {
                         gv.buildApp()
-                }
-
-                nodejs('Node') {
-                    sh 'yarn install'
                 }
             }
         }
@@ -66,6 +63,7 @@ pipeline {
                         gv.deployApp()
                 }
 
+                echo 'execute gradle...'
                 sh './gradlew -v'
             }
         }
