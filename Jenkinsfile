@@ -25,9 +25,11 @@ pipeline {
                 }
 
                 echo 'execute yarn...'
-                nodejs('Node') {
-                    sh 'yarn install'
-                }
+                // nodejs('Node') {
+                //     sh 'yarn install'
+                // }
+
+                 sh 'echo "Fail!"; exit 1'
             }
          }
          stage("build") {
@@ -63,8 +65,8 @@ pipeline {
                         gv.deployApp()
                 }
 
-                echo 'execute gradle...'
-                sh './gradlew -v'
+                // echo 'execute gradle...'
+                // sh './gradlew -v'
             }
         }
     }
