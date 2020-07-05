@@ -1,16 +1,19 @@
+### Create github
+```
 o "# Jenkins" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
 git remote add origin https://github.com/toan09sk/Jenkins.git
 git push -u origin master
-
-node - using groovy script
+```
+#### node - using groovy script
 
 ### Excute file Hello
+```
 javac Hello.java
 java Hello
-
+```
 
 ### Launch jenkins
 java -jar jenkins.war
