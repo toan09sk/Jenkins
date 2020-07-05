@@ -58,7 +58,7 @@ add C:\Program Files\Git\usr\bin to the PATH ---- to using sh
 
  - Bảng phân quyền\
 | No  | Permission Type | Symbol|
-| ------------- | ------------- | ------------- |
+| ------------- | :-------------: | :------------- |
 | 0  | No Permission  | --- |
 | 1  | Execute  | --x |
 | 2  | Write  | -w- |
