@@ -44,7 +44,7 @@ add C:\Program Files\Git\usr\bin to the PATH ---- to using sh
 3. Kiểm tra xem user đã nằm trong group chưa: `id toan`
 
 ### Phân quyền file và foler ở trên Linux
- - Kiểm tra permission hiện tại: `ls -la`&nbsp;
+ - Kiểm tra permission hiện tại: `ls -la`\;
  Example:&nbsp;
   drwxrwx--- 3 root ketoan      15 Mar 16 07:05 data-ketoan\
   -rw-r--r-- root     4 Mar 16 07:43 hellotxt
@@ -54,9 +54,9 @@ add C:\Program Files\Git\usr\bin to the PATH ---- to using sh
  r = read permission\
  w = write permission\
  x = execute permission\
- - = no permission\
+ \- = no permission\
 
- - Bảng phân quyền
+ - Bảng phân quyền\
 | No  | Permission Type | Symbol|
 | ------------- | ------------- | ------------- |
 | 0  | No Permission  | --- |
@@ -79,7 +79,7 @@ add C:\Program Files\Git\usr\bin to the PATH ---- to using sh
 - Khi `cd /home/` sau đó list ra `ls -la` nó sẽ show ra các user
 
 ## Phân quyền - Nhóm
-usermod a -G groupname username
+usermod a -G groupname username &nbsp;
 Ex: `usermod -a -G ketoan toan`
 
 Kiểm tra xem user toan đã nằm trong group ketoan chưa: `id toan`
