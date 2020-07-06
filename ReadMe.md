@@ -88,4 +88,43 @@ Kiểm tra xem user toan đã nằm trong group ketoan chưa: `id toan`
 ### Command hay sử dụng
 - Tạo thư mục: `mkdir`
 - tạo file bên trong có nội dung: `echo "hello my friend">hello.txt`
-  
+
+### Apache Webserver
+1. Cấu hình DNS
+2. install Apache
+3. Mở firewall port 80
+4. Cấu hình tên miền
+
+- Kiểm tra tên miền đã dc add vào chưa :`nslookup tinhocthatladongian.coderhanoi.com
+
+NameVirtualHost *:80
+`<VirtualHost *:80>
+    ServerAdmin info@coderhanoi.com
+    DocumentRoot /var/www/html/tinhocthatladongian
+    ServerName tinhocthatladongian.coderhanoi.com
+    <Directory "/var/www/html/tinhocthatladongian">   
+   Order deny,allow
+           Allow from all
+           AllowOverride All
+          Require all granted
+   </Directory>
+</VirtualHost>`
+
+- service httpd là appache, nó chạy trên cổng 80
+- Nhưng mặc định amazone chỉ cho mở cổng 22
+- Nên mình phải mở cho port 80
+- apache có user và group mặc định là apache. Hãy xem file config
+
+- Câu lệnh cài apache:`yum install httpd -y`
+- Start apache: `service httpd start`
+- cài đặt telnet: `yum install telnet`
+- Kiểm tra apache đã chạy hay chưa: `telnet localhost 80`
+- Kéo xuống mục ***Security groups*** ***launch-wizard-3***. Sau đó click ***Inbound rules*** tab. Type: HTTP, Port Range:80
+- Tạo thư mục mặc định: `cd /var/www/html/`
+- Tạo thư mục tinhocthatladongian: `mkdir tinhocthatladongian`
+- Xem cấu hình apache: `vi /etc/httpd/conf/httpd.conf`
+- Chuyển qua quyền apache mặc định cho folder tinhocthatladongian: `chown -Rf :apache tinhocthatladongian/`
+- Cấu hình virtual host - Chính là cấu hình tên miền trên server này
+- Khởi động lại server `service httpd restart`
+- Chuyển user yuki vào apache: `usermod -a -G apache yuki`
+- Cấp thêm quyền cho thư mục tinhocthatladongian: `chmod 775 tinhocthatladongian/`
