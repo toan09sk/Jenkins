@@ -103,7 +103,7 @@ NameVirtualHost *:80
     DocumentRoot /var/www/html/tinhocthatladongian
     ServerName tinhocthatladongian.coderhanoi.com
     <Directory "/var/www/html/tinhocthatladongian">   
-   Order deny,allow
+        Order deny,allow
            Allow from all
            AllowOverride All
           Require all granted
@@ -128,3 +128,4 @@ NameVirtualHost *:80
 - Khởi động lại server `service httpd restart`
 - Chuyển user yuki vào apache: `usermod -a -G apache yuki`
 - Cấp thêm quyền cho thư mục tinhocthatladongian: `chmod 775 tinhocthatladongian/`
+- Kiểm tra lỗi syntax trong file config : `httpd -t`
