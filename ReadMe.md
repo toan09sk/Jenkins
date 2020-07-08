@@ -88,6 +88,7 @@ Kiểm tra xem user toan đã nằm trong group ketoan chưa: `id toan`
 ### Command hay sử dụng
 - Tạo thư mục: `mkdir`
 - tạo file bên trong có nội dung: `echo "hello my friend">hello.txt`
+- Nếu quên lệnh: `Get-Alias` -> powerShell
 
 ### Apache Webserver
 1. Cấu hình DNS
