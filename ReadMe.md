@@ -129,3 +129,16 @@ NameVirtualHost *:80
 - Chuyển user yuki vào apache: `usermod -a -G apache yuki`
 - Cấp thêm quyền cho thư mục tinhocthatladongian: `chmod 775 tinhocthatladongian/`
 - Kiểm tra lỗi syntax trong file config : `httpd -t`
+
+### Truy cập máy chủ từ xa
+- Truy cập server 3.19.54.241 bằng user yuki và ec2-user
+`ssh -T -i /c/tools/yuki-server.pem yuki@3.19.54.241`
+`ssh yuki@3.19.54.241 -i /c/tools/yuki-server.pem`
+`ssh ec2-user@3.19.54.241 -i /c/tools/tinhhocthatladongian.pem`
+`ssh root@3.19.54.241`
+
+
+### GIT
+`yum install git -y`
+
+
