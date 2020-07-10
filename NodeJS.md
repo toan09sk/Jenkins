@@ -62,7 +62,7 @@ npm install techsithgit/a-useless-packge#master --> "dependency":{"a-useless-pac
 Delete/Read/Write File\
 const fs = require('fs');\
 fs.unlinkSync('./tobedeleted.txt'); ---> delete\
-console.log('do next step after deleted);\
+console.log('do next step after deleted);
 
 fs.unkink --> async\
 fs.readFileSync && encoding: "utf8" --> sync\
