@@ -1,0 +1,5 @@
+cd Official
+cp -p index.html official.css /var/www/html/tinhocthatladongian
+cp -avr /home/yuki/jenkins/workspace/TEST_SLAVE_COMMAND/font-awesome/ /var/www/html/tinhocthatladongian
+cd /var/www/html/tinhocthatladongian
+ls -la
