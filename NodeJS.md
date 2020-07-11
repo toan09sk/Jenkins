@@ -1,11 +1,13 @@
 ### NVM Install
+```
 nvm -v
 nvm ls
 nvm install 10.15.0
 nvm uninstall 10.15.0
 nvm use 12.18.2
+```
 
->error npm -v --> https://nodejs.org/dist/v8.9.3/node-v8.9.3-win-x64.zip
+> error npm -v --> https://nodejs.org/dist/v8.9.3/node-v8.9.3-win-x64.zip
 
 8.9.3
 

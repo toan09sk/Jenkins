@@ -10,7 +10,9 @@ TEST: npm run build:ssr
 SERVER:
 mkdir /var/www/testsite.co
 sudo chown -R dean:dean /var/www/testsite.co
+```
 DEV BOX
+```
 scp -r ~/Projects/LBRY/testsite/dist/ dean@192.168.0.110:/var/www/testsite/
 SERVER:
 sudo apt install apache2
