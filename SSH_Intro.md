@@ -63,6 +63,7 @@ Nếu copy tất cả các thư mục cả cha lẫn con thì dùng tham số -r
 
 Example:
  `scp -r ~/Desktop/learn-ssh/ root@3.19.54.241:/home/data/`
+ `scp -i /home/jenkins/key.pem www-user@35.180.74.8:/var/www/html/tinhocthatladongian/report/phpunit.xml ./phpunit.xml`
 
  ### Cơ chế xác thực bằng SSH Key
  - *Public Key* khóa chung, là một file text - nó lại lưu ở phía Server SSH, nó dùng để khi Client gửi Private Key (file lưu ở Client) lên để xác thực thì kiểm tra phù hợp giữa Private Key và Public Key này. Nếu phù hợp thì cho kết nối.
