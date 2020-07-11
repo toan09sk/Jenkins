@@ -9,11 +9,11 @@ nvm use 12.18.2
 
 > error npm -v --> https://nodejs.org/dist/v8.9.3/node-v8.9.3-win-x64.zip
 
-8.9.3
+8.9.3\
 
-12.18.2
+12.18.2\
 
-nvm install 12.18.2
+`nvm install 12.18.2`
 
 ### NodeJS
 ### Run Node
