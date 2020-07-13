@@ -78,9 +78,9 @@ Example:
    Tạo thư mục .ssh cho root: `mkdir /root/.ssh`
    Tạo ssh public + private key : `ssh-keygen -t rsa`
    Copy file *id_rsa.pub* vào *root*: `cp id_rsa.pub /root/.ssh/authorized_keys`
-   Check mode cho file authorized_key:`cmod 600 /root/.ssh/authorized_keys`
-   Check mode cho thư mục ssh: `cmod 700 /root/.ssh`
-   Check mode cho thư mục root: `cmod 700 /root`
+   Check mode cho file authorized_key:`chmod 600 /root/.ssh/authorized_keys`
+   Check mode cho thư mục ssh: `chmod 700 /root/.ssh`
+   Check mode cho thư mục root: `chmod 700 /root`
    Remove id_rsa đi: `rm id_rsa.pub`
    có th61 cần: ` mv id_rsa ~/keys`
    File private key *id_rsa* lấy về lưu về máy trạm
