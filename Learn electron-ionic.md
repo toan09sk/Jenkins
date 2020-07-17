@@ -165,3 +165,52 @@ Generating DMG installation file.
 
 # .gitignore
 `/release-builds`
+
+# capacitor
+```
+cd my-app
+npm install @capacitor/core @capacitor/cli
+
+npx cap init
+npx cap add electron
+npx cap add android
+npx cap add ios
+
+npx cap open ios
+npx cap open android
+npx cap open electron
+
+npx cap serve
+
+npx cap copy
+
+npx @capacitor/cli create
+
+ionic start myApp tabs --capacitor
+
+ionic integrations enable capacitor
+
+electron-packager .--platform=win32
+
+```
+
+# IONIC CLI
+```
+$ ionic generate 
+$ ionic generate component
+$ ionic generate directive
+$ ionic generate page
+$ ionic generate pipe
+$ ionic generate provider
+$ ionic generate tabs
+$ ionic generate component foo
+$ ionic generate page Login
+$ ionic generate page Detail --no-module
+$ ionic generate page About --constants
+$ ionic generate pipe MyFilterPipe
+
+--flat
+--nospec
+
+npm install -g @angular/cli
+```
