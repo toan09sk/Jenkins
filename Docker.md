@@ -95,5 +95,6 @@ docker load -i myimage.tar
 docker tag 466 newimage:version2
 docker image rm ubuntu-vim:version1
 ```
+### Chia sẻ dữ liệu trong Docker, tạo và quản lý ổ đĩa docker volume
 
 
