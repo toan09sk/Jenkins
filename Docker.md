@@ -96,5 +96,46 @@ docker tag 466 newimage:version2
 docker image rm ubuntu-vim:version1
 ```
 ### Chia sẻ dữ liệu trong Docker, tạo và quản lý ổ đĩa docker volume
+Máy Host là hệ thống bạn đang chạy Docker Engine. Một thư mục của máy Host có thể chia sẻ để các Container đọc, lưu dữ liệu.
 
+### Container - ánh xạ thư mục máy Host
+Thông tin:
 
+    -Thư mục cần chia sẻ dữ liệu trên máy host là: path_in_host
+    -Khi chạy container thư mục đó được mount - ánh xạ tới path_in_container của container
+
+-Để có kết quả đó, tạo - chạy container với tham số thêm vào -v path_to_data:path_in_container
+`docker run -it -v /home/sitesdata:/home/data ubuntu`
+-Lúc này, dữ liệu trên thư mục `/home/sitesdata/` của máy Host thì trong container có thể truy cập, cập nhật sửa đổi ... thông qua đường dẫn `/home/data`
+
+### Chia sẻ dữ liệu giữa các Container
+`Chia sẻ dữ liệu giữa các Container`
+
+### Quản lý các ổ đĩa với docker volume
+- Liệt kê danh sách các ổ đĩa: `docker volume ls`
+- Tạo một ổ đĩa: `docker volume create name_volume`
+- Xem thông tin chi tiết về đĩa: `docker volume inspect name_volume`
+- Xóa một ổ đĩa: `docker volume rm name_volume`
+
+### Mount một ổ đĩa vào container (--mount)
+```
+# Tạo ổ đĩa có tên firstdisk
+docker volume create firstdisk
+
+# Mount ổ đĩa vào container
+# container truy cập tại /home/firstdisk
+
+docker run -it --mount source=firstdisk,target=/home/firstdisk  ubuntu
+```
+
+### Gán ổ đĩa vào container khi tạo container (-v)
+Nếu muốn ổ đĩa bind dữ liệu đến một thư mục cụ thể của máy HOST thì tạo ổ đĩa với tham số như sau:
+`docker volume create --opt device=path_in_host --opt type=none --opt o=bind  volumename`
+Sau đó ổ đĩa này gán vào container với tham số -v (không dùng --mount)
+```
+# Tạo ổ đĩa có tên mydisk (dữ liệu lưu tại /home/mydata)
+docker volume create --opt device=/home/mydata --opt type=none --opt o=bind  mydisk
+# Gán ổ đĩa vào container tại (/home/sites)
+docker run -it -v mydisk:/home/sites ubuntu
+```
+- Xóa tất cả các ổ đĩa không được sử dụng bởi container nào:`docker volume prune`
