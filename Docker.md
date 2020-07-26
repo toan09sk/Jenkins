@@ -109,7 +109,7 @@ Thông tin:
 -Lúc này, dữ liệu trên thư mục `/home/sitesdata/` của máy Host thì trong container có thể truy cập, cập nhật sửa đổi ... thông qua đường dẫn `/home/data`
 
 ### Chia sẻ dữ liệu giữa các Container
-`Chia sẻ dữ liệu giữa các Container`
+`docker run -it --volumes-from container_first ubuntu`
 
 ### Quản lý các ổ đĩa với docker volume
 - Liệt kê danh sách các ổ đĩa: `docker volume ls`
