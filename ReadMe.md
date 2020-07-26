@@ -91,6 +91,7 @@ Kiểm tra xem user toan đã nằm trong group ketoan chưa: `id toan`
 - Nếu quên lệnh: `Get-Alias` -> powerShell
 - Xóa file `unlink README.md`
 - Xóa folder `sudo rm -rf jenkins`
+- Tạo file `touch 3.txt`
 
 ### Apache Webserver
 1. Cấu hình DNS

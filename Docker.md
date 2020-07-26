@@ -105,7 +105,7 @@ Thông tin:
     -Khi chạy container thư mục đó được mount - ánh xạ tới path_in_container của container
 
 -Để có kết quả đó, tạo - chạy container với tham số thêm vào -v path_to_data:path_in_container
-`docker run -it -v /home/sitesdata:/home/data ubuntu`
+`docker run -it -v /home/toan-pham/Desktop/dulieu:/home/dulieu --name C1 ubuntu-vim:version1`
 -Lúc này, dữ liệu trên thư mục `/home/sitesdata/` của máy Host thì trong container có thể truy cập, cập nhật sửa đổi ... thông qua đường dẫn `/home/data`
 
 ### Chia sẻ dữ liệu giữa các Container
@@ -126,11 +126,13 @@ docker volume create firstdisk
 # container truy cập tại /home/firstdisk
 
 docker run -it --mount source=firstdisk,target=/home/firstdisk  ubuntu
+docker run -it --mount source=D1,target=/home/disk1 ubuntu-vim:version1
 ```
 
 ### Gán ổ đĩa vào container khi tạo container (-v)
-Nếu muốn ổ đĩa bind dữ liệu đến một thư mục cụ thể của máy HOST thì tạo ổ đĩa với tham số như sau:
+Nếu muốn ổ đĩa bind dữ liệu đến một thư mục cụ thể của máy HOST thì tạo ổ đĩa với tham số như sau:\
 `docker volume create --opt device=path_in_host --opt type=none --opt o=bind  volumename`
+- Example: `docker volume create --opt device=/home/toan-pham/Desktop/dulieu --opt type=none --opt o=bind Disk2`
 - Sau đó ổ đĩa này gán vào container với tham số -v (không dùng --mount)
 ```
 # Tạo ổ đĩa có tên mydisk (dữ liệu lưu tại /home/mydata)
