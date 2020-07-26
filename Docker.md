@@ -131,7 +131,7 @@ docker run -it --mount source=firstdisk,target=/home/firstdisk  ubuntu
 ### Gán ổ đĩa vào container khi tạo container (-v)
 Nếu muốn ổ đĩa bind dữ liệu đến một thư mục cụ thể của máy HOST thì tạo ổ đĩa với tham số như sau:
 `docker volume create --opt device=path_in_host --opt type=none --opt o=bind  volumename`
-Sau đó ổ đĩa này gán vào container với tham số -v (không dùng --mount)
+- Sau đó ổ đĩa này gán vào container với tham số -v (không dùng --mount)
 ```
 # Tạo ổ đĩa có tên mydisk (dữ liệu lưu tại /home/mydata)
 docker volume create --opt device=/home/mydata --opt type=none --opt o=bind  mydisk
