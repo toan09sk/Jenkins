@@ -141,3 +141,57 @@ docker volume create --opt device=/home/mydata --opt type=none --opt o=bind  myd
 docker run -it -v mydisk:/home/sites ubuntu
 ```
 - Xóa tất cả các ổ đĩa không được sử dụng bởi container nào:`docker volume prune`
+
+### Mạng | Networking trong Docker, tạo và quản lý network trong container Docker
+- Xóa tất cả container `docker rm $(docker ps -a -q)`
+- pull images busybox `docker pull busybox`
+- `docker run -it --rm busybox`
+- `ls /bin -la`--> show command of busybox
+- `docker network ls`
+- `docker network inspect bridge`
+
+
+- `docker run -it --name B1 busybox`
+- `docker inspect B1`
+- `docker attach B1`
+- `ping google.com`
+
+- Thử ping từ B1 sang B2 
+` docker attach B1`
+` ping 172.17.0.3`
+ 
+ - Trong busybox có sẵn httpd
+ `docker attach B2`
+ `cd /var/www/`
+ `httpd`
+ `vi index.html` -> Webserver is running ...
+ - Tư B1 ping qua B2 ddee3 kiểm tra
+ `docker attach B1`
+ `wget -O - 172.17.0.3` --- Tham số  Output ddee3 hiện ra màn hình
+
+ - Thiết lập truy cập đến cổng 80 của B2 thông qua cổng 8888 của ip 127.0.0.1
+`exit`
+`docker rm B2`
+`docker run -it --name B2 -p 8888:80 busybox`
+`docker ps`
+`docker attach B2`
+ `cd /var/www/`
+ `httpd`
+ `vi index.html` -> Webserver is running ...
+ `localhost:8888`
+
+ - Tạo ra mạng cầù
+ `docker network create --driver bridge network1`
+ `docker network ls`
+ `docker network create --driver bridge mynetwork`
+ `docker network rm network1`
+
+ `docker run -it --name B3 --network mynetwork busybox`
+ `docker network inspect mynetwork`
+
+ `docker run -it --name B4 --network -p 9999:80 mynetwork busybox`
+ ...
+ `vi index.html` -> Webserver on B4 container!
+
+ - Để container kết nối vào 1 network
+ `docker network connect brdige B3`
