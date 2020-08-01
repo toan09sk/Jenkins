@@ -140,7 +140,7 @@ docker volume create --opt device=/home/mydata --opt type=none --opt o=bind  myd
 # Gán ổ đĩa vào container tại (/home/sites)
 docker run -it -v mydisk:/home/sites ubuntu
 ```
-- Xóa tất cả các ổ đĩa không được sử dụng bởi container nào:`docker volume prune`
+- Xóa tất cả các ổ đĩa không được sử dụng bởi container nào:`docker volume prune
 
 ### Mạng | Networking trong Docker, tạo và quản lý network trong container Docker
 - Xóa tất cả container `docker rm $(docker ps -a -q)`
@@ -189,9 +189,54 @@ docker run -it -v mydisk:/home/sites ubuntu
  `docker run -it --name B3 --network mynetwork busybox`
  `docker network inspect mynetwork`
 
- `docker run -it --name B4 --network -p 9999:80 mynetwork busybox`
+ `docker run -it --name B4 --network mynetwork -p 9999:80 busybox`
  ...
  `vi index.html` -> Webserver on B4 container!
 
  - Để container kết nối vào 1 network
  `docker network connect brdige B3`
+
+ ### Cài đặt, tạo và chạy PHP, phiên bản có PHP-FPM bằng Docker
+ Tạo một container chạy PHP từ image php:7.3-fpm, đặt tên container này là c-php
+
+`docker run -d --name c-php -h php -v "/mycode/php":/home/phpcode php:7.3-fpm`
+
+- Các tham số tạo, chạy container như đã biết trong phần trước, ở đây cụ thể là:
+   - -d : container sau khi tạo chạy luôn ở chế độ nền.
+   - --name c-php : container tạo ra và đặt luôn cho nó tên là c-php (Tương tác với container dễ đọc hơn khi sử dụng tên thay vì phải sử dụng mã hash id, nếu không đặt tên thì docker sinh ra tên ngẫu nhiên).
+   - -h php đặt tên HOSTNAME của container là php
+   - -v "/mycode/php":/home/phpcode thư mục trên máy host /mycode/php (với Windows đường dẫn theo OS này như "c:\path\mycode\php") được gắn vào container ở đường dẫn /home/phpcode.
+   - php:7.3-fpm là image khởi tạo ra container, nếu image này chưa có nó tự động tải về.
+
+
+ ```
+docker pull php:7.3-fpm
+docker network create --driver bridge www-net
+docker run -d --name c-php -h php -v ~/Desktop/mycode/:/home/mycode/ --network www-net php:7.3-fpm
+docker exec -it c-php bash
+
+mycode/www
+<?php
+phpinfo();
+
+php test.php
+ ```
+
+ ### Cài đặt APACHE HTTPD trên Docker
+ `docker pull httpd`
+- Muốn chỉnh sửa file config httpd.conf
+   - File config tại: /usr/local/apache2/conf/httpd.conf
+   - Nếu muốn cài trình soạn thảo nano gõ lệnh apt-get update & apt-get install nano
+
+- `docker run --rm -v ~/Desktop/mycode/:/home/mycode/ httpd cp /usr/local/apache2/conf/httpd.conf /home/mycode`
+- `code ~/Desktop/mycode/htppd.conf`
+
+Do Handler này gọi PHP thông qua proxy, nên Apache phải kích hoạt module liên quan đến proxy, mở file httpd.conf và bỏ commnet trên các dòng:
+- LoadModule proxy_module modules/mod_proxy.so
+- LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+- AddHandler "proxy:fcgi://c-php:9000" .php
+```
+DocumentRoot "/home/mycode/www"
+<Directory "home/mycode/www">
+```
+- `docker run --network www-net --name c-httpd -h httpd -p 9999:80 -p 443:443 -v ~/Desktop/mycode/:/home/mycode/ -v ~/Desktop/mycode/httpd.conf:/usr/local/apache2/conf/httpd.conf httpd`
