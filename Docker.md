@@ -317,3 +317,48 @@ mysql -utestuser -ptestpass;
 8. docker start c-httpd c-php c-mysql
 9. docker logs -f c-httpd (realtime)
 10. docker stats c-httpd c-php c-mysql
+
+### copy from host to container
+`docker cp ~/Desktop/mycode/myimage/test.html cent:/var/www/html/`
+
+### run myimage then httpd 
+`docker run --rm -p 9876:80 myimage:v1 httpd -D FOREGROUND`
+
+### Biên tập Dockerfile và sử dụng lệnh docker build để tạo các Image
+
+```
+docker run -it --name cent centos:latest
+yum update -y
+yum install httpd htttpd-tools -y
+yum install vim -y
+yum install epel-release -y
+yum update -y
+yum install htop -y
+
+docker cp ~/Desktop/mycode/myimage/test.html
+       cent:/var/www/html
+
+docker commit cent myimage:v1
+```
+
+```
+FROM centos:latest
+RUN update -y
+RUN install httpd htttpd-tools -y
+RUN install vim -y
+RUN install epel-release -y
+RUN update -y
+RUN install htop -y
+
+WORKDIR /var/www/html
+EXPOSE 80
+
+ADD ./test.html /var/www/html/
+
+ENTRYPOINT ["httpd"]
+CMD ["-D","FOREGROUND"]
+```
+
+```
+docker build -t myimage:v1 -f Dockerfile .
+```
