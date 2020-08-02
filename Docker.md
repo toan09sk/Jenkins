@@ -207,8 +207,6 @@ docker run -it -v mydisk:/home/sites ubuntu
    - -h php đặt tên HOSTNAME của container là php
    - -v "/mycode/php":/home/phpcode thư mục trên máy host /mycode/php (với Windows đường dẫn theo OS này như "c:\path\mycode\php") được gắn vào container ở đường dẫn /home/phpcode.
    - php:7.3-fpm là image khởi tạo ra container, nếu image này chưa có nó tự động tải về.
-
-
  ```
 docker pull php:7.3-fpm
 docker network create --driver bridge www-net
@@ -240,3 +238,82 @@ DocumentRoot "/home/mycode/www"
 <Directory "home/mycode/www">
 ```
 - `docker run --network www-net --name c-httpd -h httpd -p 9999:80 -p 443:443 -v ~/Desktop/mycode/:/home/mycode/ -v ~/Desktop/mycode/httpd.conf:/usr/local/apache2/conf/httpd.conf httpd`
+
+### Cài đặt, chạy MySQL bằng Docker
+MSQL 8.0
+ - port:3304
+ - file config: /etc/mysql/my.cnf
+ 		[mysql]
+ 		default-authentication-plugin=mysql_native_password
+ 		
+ -root:MYSQL_ROOT_PASSWORD
+ -databases: /var/lib/mysql
+ ```
+ docker run --rm -v ~/Desktop/mycode:/home/mycode mysql cp /etc/mysql/my.cnf /home/mycode
+ code ~/desktop/mycode/my.cnf --> default-authentication-plugin=mysql_native_password
+ docker run -e MYSQL_ROOT_PASSWORD=abc123 -v ~/Desktop/mycode/my.cnf:/etc/mysql/my.cnf -v ~/Desktop/mycode/db:/var/lib/mysql --name c-mysql mysql
+ docker exec -it c-mysql bash
+ mysql -uroot -pabc123
+ show databases;
+ use mysql;
+ show tables;
+ ```
+
+ ```
+ #Từ dấu nhắc MySQL, Tạo một user tên testuser với password là testpass
+
+CREATE USER 'testuser'@'%' IDENTIFIED BY 'testpass';
+
+#Tạo db có tên db_testdb
+create database db_testdb;
+
+select User from user;
+
+#Cấp quyền cho user testuser trên db - db_testdb
+GRANT ALL PRIVILEGES ON db_testdb.* TO 'testuser'@'%';
+flush privileges;
+
+show database;            #Xem các database đang có, kết quả có db bạn vừa tạo
+exit;                     #Ra khỏi MySQL Server
+
+testuser:testpass
+```
+
+### Cài đặt và chạy WordPress trên Docker
+```
+docker logs c-httpd
+docker logs c-php
+
+
+// fix error 500
+docker exec -it c-php bash
+php -m  --> kiem tra extension
+docker-php-ext-install mysqli
+docker-php-ext-install pdo_mysql
+docker restart c-php
+
+docker exec -it c-php bash
+apt update
+apt search iputils
+apt install iputils-ping
+ping c-mysql
+docker network connect www-net c-mysql
+docker exec -it c-mysql bash
+mysql -uroot -pabc123
+create database wp_wordpress;
+GRANT ALL PRIVILEGES ON wp_wordpress.* TO 'testuser'@'%';
+flush privileges;
+
+mysql -utestuser -ptestpass;
+```
+### Tra cứu thông tin Image, Container và giám sát hoạt động container Docker
+1. docker images
+2. docker image history httpd (image)
+3. docker inspect httpd/c-httpd (HostConfig/Binds, Networks)
+4. docker diff c-httpd (cau truc file thu muc C, A, D)
+5. docker logs c-httpd
+6. docker logs --tail 10 c-httpd
+7. docker ps -a
+8. docker start c-httpd c-php c-mysql
+9. docker logs -f c-httpd (realtime)
+10. docker stats c-httpd c-php c-mysql
