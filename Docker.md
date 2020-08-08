@@ -316,7 +316,7 @@ mysql -utestuser -ptestpass;
 7. docker ps -a
 8. docker start c-httpd c-php c-mysql
 9. docker logs -f c-httpd (realtime)
-10. docker stats c-httpd c-php c-mysql
+10. docker stats c-httpd c-php c-mysql --> kiểm tra mức sử dụng tài nguyên
 
 ### copy from host to container
 `docker cp ~/Desktop/mycode/myimage/test.html cent:/var/www/html/`
@@ -361,4 +361,78 @@ CMD ["-D","FOREGROUND"]
 
 ```
 docker build -t myimage:v1 -f Dockerfile .
+```
+
+### Sử dụng lệnh docker-compose chạy và quản lý các dịch vụ Docker
+- example-docker-compose.yml
+
+PHP:7.3-FPM (php-product)
+      - port: 9000
+      - cài mysqli, pdo_mysql:
+         * docker-php-ext-install mysqli
+         * docker-php-ext-install pdo_mysql
+      - Thư mục làm việc : /home/sites/site1
+APACHE HTTPD: (c-httpd01)
+      - port: 80,443
+      - config: /etc/local/apache2/conf/httpd.conf
+         * Nạp: mod_proxy, mod_proxy_fcgi
+         * Thư mục làm việc: /home/sites/site1
+         * index mặc định: index.php index.html
+         * PHPHANDLER: AddHandler "proxy:fcgi://php-product:9000"
+
+MYSQL: (mysql-product)
+      - port: 3304
+      - config: /etc/mysql/my.cnf
+         * default-authentication-plugin=mysql_native_password
+      - databases: /var/lib/mysql -> /mycode/db
+      - MYSQL_ROOT_PASSWORD: 123abc
+      - MYSQL_DATABASE: db_site
+      - MYSQL_USER: siteuser
+      - MYSQL_PASSWORD: sitepass
+
+NETWORK:
+      - bridge
+      - my-network
+
+VOLUME: dir-site
+      - bind, device = /mycode/
+
+
+
+---* Example:
+
+hoten: ABC
+namsinh: 200
+cacmonhoc:
+  monhocA:9  <--> thụt vào 2 khoảng trắng
+  monhocB:10
+  monhocC:   <--> mảng giá trị
+    - 5
+    - 9
+
+# Prepare
+```
+docker run --rm -v /mycode/:/home/ httpd cp /usr/local/apache2/conf/httpd.conf /home/
+code ./httpd.conf
+
+<IfModule dir_module>
+	DirectoryIndex index.php index.html
+</IfModule>
+
+docker run --rm -v /mycode/:/home/ mysql cp /etc/mysql/my.cnf /home/
+code ./my.cnf
+mkdir db
+touch docker-compose.yml
+code ./docker-compose.yml
+
+docker-compose up
+
+```
+
+# Inspect
+```
+docker network ls
+docker volumes ls
+docker ps -a
+
 ```
