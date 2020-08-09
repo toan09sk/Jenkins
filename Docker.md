@@ -419,6 +419,9 @@ code ./httpd.conf
 	DirectoryIndex index.php index.html
 </IfModule>
 
+DocumentRoot "/home/sites/site1"
+<Directory "/home/sites/site1">
+
 docker run --rm -v /mycode/:/home/ mysql cp /etc/mysql/my.cnf /home/
 code ./my.cnf
 mkdir db
@@ -426,6 +429,8 @@ touch docker-compose.yml
 code ./docker-compose.yml
 
 docker-compose up
+docker-compose down -v --remove-orphans
+docker-compose up -d -V --build --force-recreate
 
 ```
 

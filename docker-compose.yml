@@ -7,10 +7,11 @@ networks:
 
 #VOLUME
 volumes: 
-    dir-site:
-        driver_opts: 
-            device: /mycode/sites/
-            o: bind
+  dir-site:
+    driver_opts: 
+      device: /home/toan-pham/Desktop/mycode/sites/
+      type: bind
+      o: bind
 
 services: 
     # container PHP
@@ -24,7 +25,7 @@ services:
         networks: 
             - my-network
         volumes: 
-            - dir-site:/home/sites
+            - dir-site:/home/sites/
     # container HTTPD
     my-httpd:
         container_name: c-httpd01
@@ -34,8 +35,8 @@ services:
         networks: 
             - my-network
         volumes: 
-            - dir-site:/home/sites
-            - ./httpd/conf:/usr/local/apache2/conf/httpd.conf
+            - dir-site:/home/sites/
+            - ./httpd.conf:/usr/local/apache2/conf/httpd.conf
         ports: 
             - "9999:80"   # http://localhost:9999
             - "443:443"
