@@ -62,8 +62,10 @@ scp [OPTION] [user_src@]src_host:]src_file [user@]desk_host:]des_file\
 Nếu copy tất cả các thư mục cả cha lẫn con thì dùng tham số -r
 
 Example:
- `scp -r ~/Desktop/learn-ssh/ root@3.19.54.241:/home/data/`
- `scp -i /home/jenkins/key.pem www-user@35.180.74.8:/var/www/html/tinhocthatladongian/report/phpunit.xml ./phpunit.xml`
+```bash
+ scp -r ~/Desktop/learn-ssh/ root@3.19.54.241:/home/data/
+ scp -i /home/jenkins/key.pem www-user@35.180.74.8:/var/www/html/tinhocthatladongian/report/phpunit.xml ./phpunit.xml
+ ```
 
  ### Cơ chế xác thực bằng SSH Key
  - *Public Key* khóa chung, là một file text - nó lại lưu ở phía Server SSH, nó dùng để khi Client gửi Private Key (file lưu ở Client) lên để xác thực thì kiểm tra phù hợp giữa Private Key và Public Key này. Nếu phù hợp thì cho kết nối.
@@ -75,16 +77,16 @@ Example:
    Nếu user là root --> /root/.ssh/authorized_keys\
    Nếu user là abc --> /home/abc/.ssh/authorized_keys
    
-   Tạo thư mục .ssh cho root: `mkdir /root/.ssh`
-   Tạo ssh public + private key : `ssh-keygen -t rsa`
-   Copy file *id_rsa.pub* vào *root*: `cp id_rsa.pub /root/.ssh/authorized_keys`
-   Check mode cho file authorized_key:`chmod 600 /root/.ssh/authorized_keys`
-   Check mode cho thư mục ssh: `chmod 700 /root/.ssh`
-   Check mode cho thư mục root: `chmod 700 /root`
-   Remove id_rsa đi: `rm id_rsa.pub`
-   có th61 cần: ` mv id_rsa ~/keys`
-   File private key *id_rsa* lấy về lưu về máy trạm
-   Ta lấy file id_rsa từ tài khoản root: `scp root@3.19.54.241:/keys/id_rsa ~/Desktop`
+   * Tạo thư mục .ssh cho root: `mkdir /root/.ssh`
+   * Tạo ssh public + private key : `ssh-keygen -t rsa`
+   * Copy file *id_rsa.pub* vào *root*: `cp id_rsa.pub /root/.ssh/authorized_keys`
+   * Check mode cho file authorized_key:`chmod 600 /root/.ssh/authorized_keys`
+   * Check mode cho thư mục ssh: `chmod 700 /root/.ssh`
+   * Check mode cho thư mục root: `chmod 700 /root`
+   * Remove id_rsa đi: `rm id_rsa.pub`
+   * có th61 cần: ` mv id_rsa ~/keys`
+   * File private key *id_rsa* lấy về lưu về máy trạm
+   * Ta lấy file id_rsa từ tài khoản root: `scp root@3.19.54.241:/keys/id_rsa ~/Desktop`
 
    ### Đăng nhâp bằng file ssh
    - Tại máy trạm có 1 file config ở thư mục `ls ~/.ssh/` trong này có 1 file config `ls ~/.ssh/config`. Mở file lên `vi ~/.ssh/config`

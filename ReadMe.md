@@ -56,9 +56,10 @@ add C:\Program Files\Git\usr\bin to the PATH ---- to using sh
  x = execute permission\
  \- = no permission\
 
- - Bảng phân quyền\
-| No  | Permission Type | Symbol|
-| ------------- | :-------------: | -------------: |
+ - Bảng phân quyền
+
+| No     | Permission Type          |Symbol|
+| -------- | -------------- |--------- |
 | 0  | No Permission  | --- |
 | 1  | Execute  | --x |
 | 2  | Write  | -w- |
@@ -100,7 +101,7 @@ Kiểm tra xem user toan đã nằm trong group ketoan chưa: `id toan`
 4. Cấu hình tên miền
 
 - Kiểm tra tên miền đã dc add vào chưa :`nslookup tinhocthatladongian.coderhanoi.com
-
+```HTML
 NameVirtualHost *:80
 <VirtualHost *:80>
     ServerAdmin info@coderhanoi.com
@@ -113,7 +114,7 @@ NameVirtualHost *:80
           Require all granted
    </Directory>
 </VirtualHost>
-
+```
 - service httpd là appache, nó chạy trên cổng 80
 - Nhưng mặc định amazone chỉ cho mở cổng 22
 - Nên mình phải mở cho port 80
@@ -136,11 +137,12 @@ NameVirtualHost *:80
 
 ### Truy cập máy chủ từ xa
 - Truy cập server 3.19.54.241 bằng user yuki và ec2-user
-`ssh -T -i /c/tools/yuki-server.pem yuki@3.19.54.241`
-`ssh yuki@3.19.54.241 -i /c/tools/yuki-server.pem`
-`ssh ec2-user@3.19.54.241 -i /c/tools/tinhhocthatladongian.pem`
-`ssh root@3.19.54.241`
-
+```bash
+ssh -T -i /c/tools/yuki-server.pem yuki@3.19.54.241
+ssh yuki@3.19.54.241 -i /c/tools/yuki-server.pem
+ssh ec2-user@3.19.54.241 -i /c/tools/tinhhocthatladongian.pem
+ssh root@3.19.54.241
+```
 
 ### GIT
 `yum install git -y`
@@ -148,26 +150,28 @@ NameVirtualHost *:80
 ### Server Httpd apache
 1. Web server installation
 #!/bin/bash
-`yum update -y`
-`yum install httpd -y`
-`yum install git -y`
-`amazon-linux-extras install epel`
-`yum install epel-release`
-`rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm`
-`yum install -y php70 php70-php php70-php-fpm php70-php-pecl-memcached php70-php-mysqlnd php70-php-xml`
-`ln -s /usr/bin/php70 /usr/bin/php`
-`service httpd start`
-`chkconfig httpd on`
+```bash
+yum update -y
+yum install httpd -y
+yum install git -y
+amazon-linux-extras install epel
+yum install epel-release
+rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+yum install -y php70 php70-php php70-php-fpm php70-php-pecl-memcached php70-php-mysqlnd php70-php-xml
+ln -s /usr/bin/php70 /usr/bin/php
+service httpd start
+chkconfig httpd on
+```
 
 
 2. Configure Apache
-`$ useradd www-user`
-
-`$cd /var/www/html/`
-`$mkdir tinhocthatladongian`
-`$chown -Rf www-user:apache tinhocthatladongian`
-
-
+```bash
+useradd www-user
+cd /var/www/html/
+mkdir tinhocthatladongian
+chown -Rf www-user:apache tinhocthatladongian
+```
+```HTML
 Listen 81
 NameVirtualHost *:81
 <VirtualHost *:81>
@@ -179,47 +183,59 @@ NameVirtualHost *:81
       Require all granted
    </Directory>
 </VirtualHost>
+```
 
 3. Creating ssh key
-`$ sudo su - www-user`
-`$ ssh-keygen -t rsa`
-`$ cd /home/www-user/.ssh/`
-`$ mv id_rsa.pub authorized_keys`
-
+```bash
+$ sudo su - www-user
+$ ssh-keygen -t rsa
+$ cd /home/www-user/.ssh/
+$ mv id_rsa.pub authorized_keys
+```
 
 ### Jenkins server
 1. EC2 installation
 2. Java installation
-`$ yum install -y java-1.8.0-openjdk-devel.x86_64`
-`$ alternatives --config java`
-`$ java -version`
+```bash
+$ yum install -y java-1.8.0-openjdk-devel.x86_64
+$ alternatives --config java
+$ java -version
+```
 
 3. Jenkins install
-`$ wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo`
-`$ rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key`
-`$ yum install -y jenkins`
+```bash
+$ wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
+$ rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
+$ yum install -y jenkins
+```
 
 4. Start Jenkins
 `$ systemctl start jenkins`
 
 5. Check Jenkins
-`$ service jenkins status`
-`$ telnet localhost 8080`
+```
+$ service jenkins status
+$ telnet localhost 8080
+```
 
 6. Setting password
 `$ less /var/lib/jenkins/secrets/initialAdminPassword`
 
 7. Copy private key to Jenkin server
-`cd /home`
-`mkdir jenkins`
-`vi web-key.pem` -> past id_rsa của server
-`chmod 400 web-key.pem`
-`chown -Rf jenkins:root jenkins/`
+```
+cd /home
+mkdir jenkins
+vi web-key.pem` -> past id_rsa của server
+chmod 400 web-key.pem
+chown -Rf jenkins:root jenkins/
+```
 
 8. Test connect to web server
 `vi /etc/passwd` - jenkins:x:996:994:Jenkins Automation Server:/var/lib/jenkins:/bin/bash
-`su - jenkins`
-`ssh yuki@3.19.54.241 -i /home/jenkins/web-key.pem`
+```
+su - jenkins
+ssh yuki@3.19.54.241 -i /home/jenkins/web-key.pem
+```
 
 9. Workspace
  `/var/lib/jenkins/workspace/`
