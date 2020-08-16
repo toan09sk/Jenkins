@@ -1,4 +1,4 @@
-### 🏃🏼‍♀️ Lab document
+# 🏃🏼‍♀️ Lab document
 - Cài docker và docker-compose trên EC2/AWS
 ```
 sudo yum update -y
@@ -58,7 +58,7 @@ docker ps -a
  docker rm -f ABC
  ```
 
-### Lệnh Docker exec, lưu container thành image với commit, xuất image ra file
+# Lệnh Docker exec, lưu container thành image với commit, xuất image ra file
 
 - Ta ở ngoài nhưng vẫn muốn thực hiện 1 lệnh cho container đang chạy
 ```
@@ -95,29 +95,29 @@ docker load -i myimage.tar
 docker tag 466 newimage:version2
 docker image rm ubuntu-vim:version1
 ```
-### Chia sẻ dữ liệu trong Docker, tạo và quản lý ổ đĩa docker volume
+# Chia sẻ dữ liệu trong Docker, tạo và quản lý ổ đĩa docker volume
 Máy Host là hệ thống bạn đang chạy Docker Engine. Một thư mục của máy Host có thể chia sẻ để các Container đọc, lưu dữ liệu.
 
-### Container - ánh xạ thư mục máy Host
+# Container - ánh xạ thư mục máy Host
 Thông tin:
 
     -Thư mục cần chia sẻ dữ liệu trên máy host là: path_in_host
     -Khi chạy container thư mục đó được mount - ánh xạ tới path_in_container của container
 
--Để có kết quả đó, tạo - chạy container với tham số thêm vào -v path_to_data:path_in_container
+- Để có kết quả đó, tạo - chạy container với tham số thêm vào -v path_to_data:path_in_container:
 `docker run -it -v /home/toan-pham/Desktop/dulieu:/home/dulieu --name C1 ubuntu-vim:version1`
--Lúc này, dữ liệu trên thư mục `/home/sitesdata/` của máy Host thì trong container có thể truy cập, cập nhật sửa đổi ... thông qua đường dẫn `/home/data`
+- Lúc này, dữ liệu trên thư mục `/home/sitesdata/` của máy Host thì trong container có thể truy cập, cập nhật sửa đổi ... thông qua đường dẫn `/home/data`
 
-### Chia sẻ dữ liệu giữa các Container
+# Chia sẻ dữ liệu giữa các Container
 `docker run -it --volumes-from container_first ubuntu`
 
-### Quản lý các ổ đĩa với docker volume
+# Quản lý các ổ đĩa với docker volume
 - Liệt kê danh sách các ổ đĩa: `docker volume ls`
 - Tạo một ổ đĩa: `docker volume create name_volume`
 - Xem thông tin chi tiết về đĩa: `docker volume inspect name_volume`
 - Xóa một ổ đĩa: `docker volume rm name_volume`
 
-### Mount một ổ đĩa vào container (--mount)
+# Mount một ổ đĩa vào container (--mount)
 ```
 # Tạo ổ đĩa có tên firstdisk
 docker volume create firstdisk
@@ -129,7 +129,7 @@ docker run -it --mount source=firstdisk,target=/home/firstdisk  ubuntu
 docker run -it --mount source=D1,target=/home/disk1 ubuntu-vim:version1
 ```
 
-### Gán ổ đĩa vào container khi tạo container (-v)
+# Gán ổ đĩa vào container khi tạo container (-v)
 Nếu muốn ổ đĩa bind dữ liệu đến một thư mục cụ thể của máy HOST thì tạo ổ đĩa với tham số như sau:\
 `docker volume create --opt device=path_in_host --opt type=none --opt o=bind  volumename`
 - Example: `docker volume create --opt device=/home/toan-pham/Desktop/dulieu --opt type=none --opt o=bind Disk2`
@@ -142,11 +142,11 @@ docker run -it -v mydisk:/home/sites ubuntu
 ```
 - Xóa tất cả các ổ đĩa không được sử dụng bởi container nào:`docker volume prune
 
-### Mạng | Networking trong Docker, tạo và quản lý network trong container Docker
+# Mạng | Networking trong Docker, tạo và quản lý network trong container Docker
 - Xóa tất cả container `docker rm $(docker ps -a -q)`
 - pull images busybox `docker pull busybox`
 - `docker run -it --rm busybox`
-- `ls /bin -la`--> show command of busybox
+- `ls /bin -la` --> show command of busybox
 - `docker network ls`
 - `docker network inspect bridge`
 
@@ -196,12 +196,12 @@ docker run -it -v mydisk:/home/sites ubuntu
  - Để container kết nối vào 1 network
  `docker network connect brdige B3`
 
- ### Cài đặt, tạo và chạy PHP, phiên bản có PHP-FPM bằng Docker
+ # Cài đặt, tạo và chạy PHP, phiên bản có PHP-FPM bằng Docker
  Tạo một container chạy PHP từ image php:7.3-fpm, đặt tên container này là c-php
 
 `docker run -d --name c-php -h php -v "/mycode/php":/home/phpcode php:7.3-fpm`
 
-- Các tham số tạo, chạy container như đã biết trong phần trước, ở đây cụ thể là:
+* Các tham số tạo, chạy container như đã biết trong phần trước, ở đây cụ thể là:
    - -d : container sau khi tạo chạy luôn ở chế độ nền.
    - --name c-php : container tạo ra và đặt luôn cho nó tên là c-php (Tương tác với container dễ đọc hơn khi sử dụng tên thay vì phải sử dụng mã hash id, nếu không đặt tên thì docker sinh ra tên ngẫu nhiên).
    - -h php đặt tên HOSTNAME của container là php
@@ -220,7 +220,7 @@ phpinfo();
 php test.php
  ```
 
- ### Cài đặt APACHE HTTPD trên Docker
+ # Cài đặt APACHE HTTPD trên Docker
  `docker pull httpd`
 - Muốn chỉnh sửa file config httpd.conf
    - File config tại: /usr/local/apache2/conf/httpd.conf
@@ -239,24 +239,25 @@ DocumentRoot "/home/mycode/www"
 ```
 - `docker run --network www-net --name c-httpd -h httpd -p 9999:80 -p 443:443 -v ~/Desktop/mycode/:/home/mycode/ -v ~/Desktop/mycode/httpd.conf:/usr/local/apache2/conf/httpd.conf httpd`
 
-### Cài đặt, chạy MySQL bằng Docker
+# Cài đặt, chạy MySQL bằng Docker
 MSQL 8.0
  - port:3304
- - file config: /etc/mysql/my.cnf
- 		[mysql]
+ - file config: /etc/mysql/my.cnf\
+ 		[mysql]\
  		default-authentication-plugin=mysql_native_password
  		
- -root:MYSQL_ROOT_PASSWORD
- -databases: /var/lib/mysql
- ```
- docker run --rm -v ~/Desktop/mycode:/home/mycode mysql cp /etc/mysql/my.cnf /home/mycode
- code ~/desktop/mycode/my.cnf --> default-authentication-plugin=mysql_native_password
- docker run -e MYSQL_ROOT_PASSWORD=abc123 -v ~/Desktop/mycode/my.cnf:/etc/mysql/my.cnf -v ~/Desktop/mycode/db:/var/lib/mysql --name c-mysql mysql
- docker exec -it c-mysql bash
- mysql -uroot -pabc123
- show databases;
- use mysql;
- show tables;
+ - root:MYSQL_ROOT_PASSWORD
+ - databases: /var/lib/mysql
+
+ ```bash
+ $ docker run --rm -v ~/Desktop/mycode:/home/mycode mysql cp /etc/mysql/my.cnf /home/mycode
+ $ code ~/desktop/mycode/my.cnf --> default-authentication-plugin=mysql_native_password
+ $ docker run -e MYSQL_ROOT_PASSWORD=abc123 -v ~/Desktop/mycode/my.cnf:/etc/mysql/my.cnf -v ~/Desktop/mycode/db:/var/lib/mysql --name c-mysql mysql
+ $ docker exec -it c-mysql bash
+ $ mysql -uroot -pabc123
+ $ show databases;
+ $ use mysql;
+ $ show tables;
  ```
 
  ```
@@ -279,7 +280,7 @@ exit;                     #Ra khỏi MySQL Server
 testuser:testpass
 ```
 
-### Cài đặt và chạy WordPress trên Docker
+# Cài đặt và chạy WordPress trên Docker
 ```
 docker logs c-httpd
 docker logs c-php
@@ -306,7 +307,7 @@ flush privileges;
 
 mysql -utestuser -ptestpass;
 ```
-### Tra cứu thông tin Image, Container và giám sát hoạt động container Docker
+# Tra cứu thông tin Image, Container và giám sát hoạt động container Docker
 1. docker images
 2. docker image history httpd (image)
 3. docker inspect httpd/c-httpd (HostConfig/Binds, Networks)
@@ -324,7 +325,7 @@ mysql -utestuser -ptestpass;
 ### run myimage then httpd 
 `docker run --rm -p 9876:80 myimage:v1 httpd -D FOREGROUND`
 
-### Biên tập Dockerfile và sử dụng lệnh docker build để tạo các Image
+# Biên tập Dockerfile và sử dụng lệnh docker build để tạo các Image
 
 ```
 docker run -it --name cent centos:latest
@@ -363,9 +364,10 @@ CMD ["-D","FOREGROUND"]
 docker build -t myimage:v1 -f Dockerfile .
 ```
 
-### Sử dụng lệnh docker-compose chạy và quản lý các dịch vụ Docker
+# Sử dụng lệnh docker-compose chạy và quản lý các dịch vụ Docker
 - example-docker-compose.yml
 
+```
 PHP:7.3-FPM (php-product)
       - port: 9000
       - cài mysqli, pdo_mysql:
@@ -383,7 +385,7 @@ APACHE HTTPD: (c-httpd01)
 MYSQL: (mysql-product)
       - port: 3304
       - config: /etc/mysql/my.cnf
-         * default-authentication-plugin=mysql_native_password
+            default-authentication-plugin=mysql_native_password
       - databases: /var/lib/mysql -> /mycode/db
       - MYSQL_ROOT_PASSWORD: 123abc
       - MYSQL_DATABASE: db_site
@@ -397,10 +399,11 @@ NETWORK:
 VOLUME: dir-site
       - bind, device = /mycode/
 
-
+```
 
 ---* Example:
 
+```
 hoten: ABC
 namsinh: 200
 cacmonhoc:
@@ -409,8 +412,9 @@ cacmonhoc:
   monhocC:   <--> mảng giá trị
     - 5
     - 9
+```
 
-# Prepare
+### Prepare
 ```
 docker run --rm -v /mycode/:/home/ httpd cp /usr/local/apache2/conf/httpd.conf /home/
 code ./httpd.conf
@@ -431,13 +435,105 @@ code ./docker-compose.yml
 docker-compose up
 docker-compose down -v --remove-orphans
 docker-compose up -d -V --build --force-recreate
-
 ```
 
-# Inspect
+### Inspect
 ```
 docker network ls
 docker volumes ls
 docker ps -a
+```
+
+# MS SQL Server - Image Container Docker
+
+## MSSQL
+- image: mcr.microsoft.com/mssql/server:2017-latest
+- user quản lý : `sa`
+- port: `1433`
+- database: `/var/opt/mssql`
+- `-e SA_PASSWORD=Password789`
+- `-e ACCEPT_EULA=Y`
+
+## SQLCMD
+- `sqlcmd (/opt/mssql-tools/bin/sqlcmd)`
+- `sqlcmd -S host -U user -P password`
+
+### Step
+1. `docker pull mcr.microsoft.com/mssql/server:2017-latest`
+2. `docker volume create mssql`
+3. `docker run --name sqlserver -p 1433:1433 -v mssql:/var/opt/mssql -e SA_PASSWORD=Password789 -e ACCEPT_EULA=Y id-image`
+4. `docker exec -it sqlserver bash`
+5. `$ cd /opt/mssql-tools/bin`
+6. `$ ./sqlcmd -S localhost -U sa -P Password789`
+7. `select name from master.dbo.sysdatabases`
+8. `go`
+9. `azuredatastudio`
+
+```sql
+create database abc
+
+CREATE TABLE student(
+    id int identity(1,1) not null,
+    fullname VARCHAR(50),
+    age int not null
+)
+
+insert into student (fullname,age) values ('nguyen van A',20)
+insert into student (fullname,age) values ('nguyen van B',21)
+insert into student (fullname,age) values ('nguyen van C',22)
+insert into student (fullname,age) values ('nguyen van D',23)
+
+select * from student
+```
+# Sử dụng Haproxy làm server cân bằng tải với Docker
+```cfg
+backend name-backend                        # bắt đầu định nghĩa backend với tên name-backend
+    balance  roundrobin                     # thuật toán cân bằng tải sử dụng
+
+    mode http                               # chế độ cần bằng tải (còn có mode tcp)
+
+    server server1 mydomain.com:80 check    # server1 (chỉ ra bằng domain và cổng)
+    server server2 IP:80 check              # server2 (chỉ ra bằng IP và cổng)
+                                            # chữ check ở cuối là yêu cầu HAProxy kiểm tra server
+
+
+frontend name-frontend                                  # bắt đầu định nghĩa một frontend đặt tên là name-frontend
+    bind *:80                                           # nhận phân tích các request gửi đến cổng 80 từ IP bất kỳ
+
+    acl alc1 hdr_dom(host) -i  testhaproxy1.com         # định nghĩa alc1 là: nếu domain truy vấn là testhaproxy1.com
+    acl alc2 hdr_dom(host) -i  testhaproxy2.com         # định nghĩa alc2 là: nếu domain truy vấn là testhaproxy2.com
+
+    use_backend name-backend if acl1                    # chuyển request đến backend có tên name-backend nếu acl1 thỏa mãn
+    use_backend other-backend if alc2                   # chuyển request đến backend có tên other-backend nếu acl2 thỏa mãn
+    use_backend default_backend                         # chuyển request đến backend có tên default-backend nếu request chưa chuyển cho backend nào!
+```
+
+Một số thuật toán cân bằng tải:
+- **roundrobin** chọn server xoay vòng (request này cho server này, thì resquest tiếp theo cho server khác ...)
+- **leastconn** chuyển yêu cầu cho server có ít kết nối nhất
+- **source** server được chọn dựa vào IP của user!
+
+check khai báo ở server là yêu cầu HAProxy liên tục kiểm tra xem server đó còn sống (phản hồi gói tin) không, để đảm bảo request được gửi đến server đang còn sống!
+
+### step
+1. `docker pull haproxy`
+2. `cd mycode`
+3. `touch haproxy.cfg`
+4. `docker run -v /mycode/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg -p 8080:80 -p 443:443 haproxy:latest`
+
+5. `code /etc/hosts`
 
 ```
+127.0.0.1 testhaproxy1.com
+127.0.0.1 testhaproxy2.com
+```
+
+# Sử dụng docker-machine tạo các Docker Host
+1. `docker-machine ls`
+2. `docker-machine create -drive virtualbox vps1` or `docker-machine create -drive hyperv vps1`
+3. `docker-machine stop vps1 vps2`
+4. `docker-machine start vps1`
+5. `docker-machine rm vps2`
+6. `docker-machine ssh vps1`
+7. `docker-machine scp -r ~/Desktop/data/ vps1:/home/`
+8. `docker-machine ip vps2`

@@ -1,4 +1,4 @@
-### Create github
+# Create github
 ```
 o "# Jenkins" >> README.md
 git init
@@ -15,16 +15,16 @@ javac Hello.java
 java Hello
 ```
 
-### Launch jenkins
+# Launch jenkins
 `java -jar jenkins.war`
 
-### show environment variable
+# show environment variable
 localhost:8080/env-vars.html/
 
-### Using command sh
+# Using command sh
 add C:\Program Files\Git\usr\bin to the PATH ---- to using sh
 
-### Create SSH Key
+# Create SSH Key
 1. Chuyển qua quyền root: `sudo su -`
 2. Tạo user là yuki: `useradd yuki`
 3. Tạo password cho user: `passwd yuki`
@@ -38,12 +38,12 @@ add C:\Program Files\Git\usr\bin to the PATH ---- to using sh
 11. cấu hình lại ssh: `vi /etc/ssh/sshd_config`
 12. Restart ssh: `service sshd restart`
 
-### User/Group và phân quyền file/folder
+# User/Group và phân quyền file/folder
 1. Tạo nhóm kettoan: `groupadd ketoan`
 2. Thêm user vào group: usermod a -G groupname username --> Ex: `usermode -a ketoan bao`
 3. Kiểm tra xem user đã nằm trong group chưa: `id toan`
 
-### Phân quyền file và foler ở trên Linux
+# Phân quyền file và foler ở trên Linux
  - Kiểm tra permission hiện tại: `ls -la`\;
  Example:&nbsp;
   drwxrwx--- 3 root ketoan      15 Mar 16 07:05 data-ketoan\
@@ -135,7 +135,7 @@ NameVirtualHost *:80
 - Cấp thêm quyền cho thư mục tinhocthatladongian: `chmod 775 tinhocthatladongian/`
 - Kiểm tra lỗi syntax trong file config : `httpd -t`
 
-### Truy cập máy chủ từ xa
+# Truy cập máy chủ từ xa
 - Truy cập server 3.19.54.241 bằng user yuki và ec2-user
 ```bash
 ssh -T -i /c/tools/yuki-server.pem yuki@3.19.54.241
@@ -144,7 +144,7 @@ ssh ec2-user@3.19.54.241 -i /c/tools/tinhhocthatladongian.pem
 ssh root@3.19.54.241
 ```
 
-### GIT
+# GIT
 `yum install git -y`
 
 ### Server Httpd apache
@@ -193,7 +193,7 @@ $ cd /home/www-user/.ssh/
 $ mv id_rsa.pub authorized_keys
 ```
 
-### Jenkins server
+# Jenkins server
 1. EC2 installation
 2. Java installation
 ```bash
