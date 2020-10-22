@@ -80,3 +80,21 @@ ___
 * [x] Task 1
 * [x] Task 2
 * [ ] Task 3
+
+<!-- Wiki -->
+[[_TOC_]]
+
+# **1. Scope/ Description**
+
+
+# **2. Dataflow/activity diagrams**
+- **List grid view**:
+
+# **3. UI Design**
+
+# **4. Technical design and implementation**
+##4.1. **Client side**
+
+##4.2. **Server side**
+
+# **5. Reference/Impact area**
